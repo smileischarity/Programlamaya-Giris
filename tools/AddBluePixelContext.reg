@@ -1,0 +1,8 @@
+Windows Registry Editor Version 5.00
+
+[HKEY_CLASSES_ROOT\SystemFileAssociations\.bmp\shell\AddBluePixel]
+@="+1 piksel sağ kısma"
+"Icon"="%SystemRoot%\\system32\\imageres.dll,-68"
+
+[HKEY_CLASSES_ROOT\SystemFileAssociations\.bmp\shell\AddBluePixel\command]
+@="powershell.exe -NoProfile -ExecutionPolicy Bypass -File \"C:\\Tools\\AddBluePixel.ps1\" \"%1\""
