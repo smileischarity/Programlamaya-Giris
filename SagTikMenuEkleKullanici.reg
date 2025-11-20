@@ -1,0 +1,14 @@
+Windows Registry Editor Version 5.00
+
+; BMP dosyalarına sağ tık menüsüne öğe ekleme (Kullanıcı Dizini Versiyonu)
+; YÖNETİCİ İZNİ GEREKTİRMEZ - Sadece mevcut kullanıcı için çalışır
+; Sadece .bmp dosyalarına sağ tıklandığında "+1 piksel sağ kısma" seçeneği görünür
+; Bu seçenek dosyanın genişliğini 1 piksel artırır ve sağ tarafa mavi (R:0, G:0, B:255) piksel ekler
+; NOT: Dosya yolunu kendi kurulum konumunuza göre değiştirin!
+
+[HKEY_CURRENT_USER\Software\Classes\bmpfile\shell\BmpGenislet]
+@="+1 piksel sağ kısma"
+"Icon"="shell32.dll,1"
+
+[HKEY_CURRENT_USER\Software\Classes\bmpfile\shell\BmpGenislet\command]
+@="\"%USERPROFILE%\\BmpGenislet\\BmpGenislet.bat\" \"%1\""

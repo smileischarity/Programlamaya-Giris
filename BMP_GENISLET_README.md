@@ -18,7 +18,23 @@ Bu araç, BMP dosyalarının genişliğini 1 piksel artırır ve sağ tarafa mav
 
 ## Kurulum
 
-### Yöntem 1: Otomatik Kurulum (Önerilen)
+### ⭐ Yöntem 1: Kullanıcı Dizinine Kurulum (ÖNERİLEN - Yönetici İzni GEREKTİRMEZ)
+
+**"Öğeye erişmek için gereken izinler yok" hatası alıyorsanız bu yöntemi kullanın!**
+
+1. **Pillow kütüphanesini kurun (eğer yoksa):**
+   - `PillowKur.bat` dosyasını çalıştırın
+   - Veya manuel: `python -m pip install Pillow`
+
+2. **Ana kurulumu yapın:**
+   - `BmpGenisletKurKullanici.bat` dosyasını çift tıklayarak çalıştırın
+   - **Yönetici izni gerektirmez!**
+   - Script otomatik olarak:
+     - Pillow'un kurulu olduğunu kontrol eder (yoksa kurar)
+     - Programı `%USERPROFILE%\BmpGenislet\` dizinine kopyalar (örn: `C:\Users\KullaniciAdi\BmpGenislet\`)
+     - Sağ tık menüsünü ekler (sadece mevcut kullanıcı için)
+
+### Yöntem 2: Program Files'e Kurulum (Yönetici İzni GEREKTİRİR)
 
 1. **Pillow kütüphanesini kurun (eğer yoksa):**
    - `PillowKur.bat` dosyasını çalıştırın
@@ -26,13 +42,13 @@ Bu araç, BMP dosyalarının genişliğini 1 piksel artırır ve sağ tarafa mav
 
 2. **Ana kurulumu yapın:**
    - `BmpGenisletKur.bat` dosyasına sağ tıklayın
-   - "Yönetici olarak çalıştır" seçeneğini seçin
+   - **"Yönetici olarak çalıştır"** seçeneğini seçin
    - Script otomatik olarak:
      - Pillow'un kurulu olduğunu kontrol eder (yoksa kurar)
      - Programı `C:\Program Files\BmpGenislet\` dizinine kopyalar
      - Sağ tık menüsünü ekler
 
-### Yöntem 2: Manuel Kurulum
+### Yöntem 3: Manuel Kurulum
 
 1. **Pillow kütüphanesini kurun:**
    ```bash
@@ -40,18 +56,24 @@ Bu araç, BMP dosyalarının genişliğini 1 piksel artırır ve sağ tarafa mav
    ```
 
 2. **Dosyaları kopyalayın:**
-   - `BmpGenislet.py` → `C:\Program Files\BmpGenislet\`
-   - `BmpGenislet.bat` → `C:\Program Files\BmpGenislet\`
+   - Kullanıcı dizinine: `%USERPROFILE%\BmpGenislet\` (yönetici izni gerektirmez)
+   - Veya Program Files'e: `C:\Program Files\BmpGenislet\` (yönetici izni gerekir)
 
 3. **Sağ tık menüsünü ekleyin:**
-   - `SagTikMenuEkle.bat` dosyasını düzenleyip yolu güncelleyin
-   - Yönetici olarak çalıştırın
+   - Kullanıcı dizini için: `SagTikMenuEkleKullanici.bat` (yönetici izni gerektirmez)
+   - Program Files için: `SagTikMenuEkle.bat` (yönetici olarak çalıştırın)
 
-### Yöntem 3: Registry Dosyası ile
+### Yöntem 4: Registry Dosyası ile
 
-1. `SagTikMenuEkle.reg` dosyasını düzenleyin
+**Kullanıcı dizini versiyonu (yönetici izni gerektirmez):**
+1. `SagTikMenuEkleKullanici.reg` dosyasını düzenleyin
 2. `BmpGenislet.bat` yolunu kendi kurulum konumunuza göre değiştirin
 3. Dosyaya çift tıklayarak kayıt defterine ekleyin
+
+**Program Files versiyonu (yönetici izni gerekir):**
+1. `SagTikMenuEkle.reg` dosyasını düzenleyin
+2. `BmpGenislet.bat` yolunu kendi kurulum konumunuza göre değiştirin
+3. Dosyaya sağ tıklayıp "Yönetici olarak çalıştır" seçeneğini seçin
 
 ## Kullanım
 
@@ -68,11 +90,21 @@ Bu araç, BMP dosyalarının genişliğini 1 piksel artırır ve sağ tarafa mav
 - **BmpGenislet.bat** - Python scriptini çalıştıran wrapper batch dosyası
 - **BmpGenislet.cs** - C# kaynak kodu (System.Drawing kullanır, alternatif)
 - **BmpGenislet.cpp** - C++ kaynak kodu (Windows API kullanır, alternatif)
-- **BmpGenisletKur.bat** - Otomatik kurulum scripti (Python versiyonu için)
+
+**Kurulum Scriptleri:**
+- **BmpGenisletKurKullanici.bat** - ⭐ Kullanıcı dizinine kurulum (YÖNETİCİ İZNİ GEREKTİRMEZ - ÖNERİLEN)
+- **BmpGenisletKur.bat** - Program Files'e kurulum (Yönetici izni gerekir)
 - **PillowKur.bat** - Pillow kütüphanesini kurma scripti
-- **SagTikMenuEkle.bat** - Sağ tık menüsü ekleme scripti
-- **SagTikMenuKaldir.bat** - Sağ tık menüsü kaldırma scripti
-- **SagTikMenuEkle.reg** - Registry dosyası
+
+**Sağ Tık Menüsü Scriptleri (Kullanıcı Dizini - Yönetici İzni GEREKTİRMEZ):**
+- **SagTikMenuEkleKullanici.bat** - Sağ tık menüsü ekleme (kullanıcı dizini)
+- **SagTikMenuKaldirKullanici.bat** - Sağ tık menüsü kaldırma (kullanıcı dizini)
+- **SagTikMenuEkleKullanici.reg** - Registry dosyası (kullanıcı dizini)
+
+**Sağ Tık Menüsü Scriptleri (Program Files - Yönetici İzni GEREKTİRİR):**
+- **SagTikMenuEkle.bat** - Sağ tık menüsü ekleme (Program Files)
+- **SagTikMenuKaldir.bat** - Sağ tık menüsü kaldırma (Program Files)
+- **SagTikMenuEkle.reg** - Registry dosyası (Program Files)
 
 ## Python Versiyonu (Önerilen)
 
@@ -116,9 +148,15 @@ cl BmpGenislet.cpp /Fe:BmpGenislet.exe
 
 ## Sorun Giderme
 
+### "Öğeye erişmek için gereken izinler yok" hatası
+- **Çözüm:** `BmpGenisletKurKullanici.bat` dosyasını kullanın (yönetici izni gerektirmez)
+- Bu script programı kullanıcı dizinine kurar ve HKEY_CURRENT_USER kullanarak menü ekler
+- Alternatif: `BmpGenisletKur.bat` dosyasına sağ tıklayıp **"Yönetici olarak çalıştır"** seçeneğini seçin
+
 ### "Dosya bulunamadı" hatası
-- BmpGenislet.exe'nin doğru konumda olduğundan emin olun
+- BmpGenislet.bat'ın doğru konumda olduğundan emin olun
 - Registry'deki yol ayarını kontrol edin
+- Kullanıcı dizini versiyonu kullanıyorsanız: `%USERPROFILE%\BmpGenislet\BmpGenislet.bat`
 
 ### "BMP dosyası okunamadı" hatası
 - Dosyanın gerçekten BMP formatında olduğundan emin olun
