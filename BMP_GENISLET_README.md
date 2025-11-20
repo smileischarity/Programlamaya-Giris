@@ -1,4 +1,4 @@
-# BMP Genişletme Aracı - Windows 7 32-bit
+# BMP Genişletme Aracı - Windows 7 32-bit (Python 3.8+)
 
 Bu araç, BMP dosyalarının genişliğini 1 piksel artırır ve sağ tarafa mavi (R:0, G:0, B:255) renkli bir piksel ekler.
 
@@ -9,34 +9,48 @@ Bu araç, BMP dosyalarının genişliğini 1 piksel artırır ve sağ tarafa mav
 - ✅ Dosyanın genişliğini 1 piksel artırır
 - ✅ Sağ tarafa mavi (R:0, G:0, B:255) piksel ekler
 - ✅ Orijinal dosyayı otomatik yedekler (.yedek uzantılı)
+- ✅ Python 3.8+ ile çalışır (derleme gerektirmez)
+
+## Gereksinimler
+
+- Python 3.8 veya üzeri
+- Pillow kütüphanesi (otomatik kurulur)
 
 ## Kurulum
 
 ### Yöntem 1: Otomatik Kurulum (Önerilen)
 
-1. `BmpGenisletKur.bat` dosyasına sağ tıklayın
-2. "Yönetici olarak çalıştır" seçeneğini seçin
-3. Script otomatik olarak:
-   - Programı `C:\Program Files\BmpGenislet\` dizinine kopyalar
-   - Sağ tık menüsünü ekler
+1. **Pillow kütüphanesini kurun (eğer yoksa):**
+   - `PillowKur.bat` dosyasını çalıştırın
+   - Veya manuel: `python -m pip install Pillow`
+
+2. **Ana kurulumu yapın:**
+   - `BmpGenisletKur.bat` dosyasına sağ tıklayın
+   - "Yönetici olarak çalıştır" seçeneğini seçin
+   - Script otomatik olarak:
+     - Pillow'un kurulu olduğunu kontrol eder (yoksa kurar)
+     - Programı `C:\Program Files\BmpGenislet\` dizinine kopyalar
+     - Sağ tık menüsünü ekler
 
 ### Yöntem 2: Manuel Kurulum
 
-1. **BmpGenislet.exe'yi derleyin:**
-   - C# için: `csc BmpGenislet.cs` (Visual Studio veya .NET Framework SDK gerekir)
-   - C++ için: Visual Studio ile derleyin
+1. **Pillow kütüphanesini kurun:**
+   ```bash
+   python -m pip install Pillow
+   ```
 
-2. **Programı bir dizine kopyalayın:**
-   - Örnek: `C:\Program Files\BmpGenislet\BmpGenislet.exe`
+2. **Dosyaları kopyalayın:**
+   - `BmpGenislet.py` → `C:\Program Files\BmpGenislet\`
+   - `BmpGenislet.bat` → `C:\Program Files\BmpGenislet\`
 
 3. **Sağ tık menüsünü ekleyin:**
-   - `SagTikMenuEkle.bat` dosyasını düzenleyip BmpGenislet.exe yolunu güncelleyin
+   - `SagTikMenuEkle.bat` dosyasını düzenleyip yolu güncelleyin
    - Yönetici olarak çalıştırın
 
 ### Yöntem 3: Registry Dosyası ile
 
 1. `SagTikMenuEkle.reg` dosyasını düzenleyin
-2. `BmpGenislet.exe` yolunu kendi kurulum konumunuza göre değiştirin
+2. `BmpGenislet.bat` yolunu kendi kurulum konumunuza göre değiştirin
 3. Dosyaya çift tıklayarak kayıt defterine ekleyin
 
 ## Kullanım
@@ -50,14 +64,29 @@ Bu araç, BMP dosyalarının genişliğini 1 piksel artırır ve sağ tarafa mav
 
 ## Dosyalar
 
-- **BmpGenislet.cs** - C# kaynak kodu (System.Drawing kullanır)
-- **BmpGenislet.cpp** - C++ kaynak kodu (Windows API kullanır, daha hafif)
-- **BmpGenisletKur.bat** - Otomatik kurulum scripti
+- **BmpGenislet.py** - Python scripti (Pillow kullanır, önerilen)
+- **BmpGenislet.bat** - Python scriptini çalıştıran wrapper batch dosyası
+- **BmpGenislet.cs** - C# kaynak kodu (System.Drawing kullanır, alternatif)
+- **BmpGenislet.cpp** - C++ kaynak kodu (Windows API kullanır, alternatif)
+- **BmpGenisletKur.bat** - Otomatik kurulum scripti (Python versiyonu için)
+- **PillowKur.bat** - Pillow kütüphanesini kurma scripti
 - **SagTikMenuEkle.bat** - Sağ tık menüsü ekleme scripti
 - **SagTikMenuKaldir.bat** - Sağ tık menüsü kaldırma scripti
 - **SagTikMenuEkle.reg** - Registry dosyası
 
-## Derleme
+## Python Versiyonu (Önerilen)
+
+Python 3.8+ kurulu olduğu için derleme gerektirmez. Sadece Pillow kütüphanesi kurulmalıdır:
+
+```bash
+python -m pip install Pillow
+```
+
+veya `PillowKur.bat` dosyasını çalıştırın.
+
+## Alternatif: C# veya C++ Versiyonları
+
+Eğer Python kullanmak istemiyorsanız, C# veya C++ versiyonlarını derleyebilirsiniz:
 
 ### C# Versiyonu (.NET Framework gerekir)
 
@@ -65,22 +94,11 @@ Bu araç, BMP dosyalarının genişliğini 1 piksel artırır ve sağ tarafa mav
 csc /target:exe /out:BmpGenislet.exe BmpGenislet.cs
 ```
 
-veya Visual Studio'da:
-- Yeni bir Console Application projesi oluşturun
-- `BmpGenislet.cs` içeriğini kopyalayın
-- System.Drawing referansını ekleyin
-- Derleyin
-
 ### C++ Versiyonu (Visual Studio gerekir)
 
 ```bash
 cl BmpGenislet.cpp /Fe:BmpGenislet.exe
 ```
-
-veya Visual Studio'da:
-- Yeni bir Win32 Console Application projesi oluşturun
-- `BmpGenislet.cpp` içeriğini kopyalayın
-- Derleyin
 
 ## Kaldırma
 
@@ -89,10 +107,12 @@ veya Visual Studio'da:
 
 ## Teknik Detaylar
 
-- **Desteklenen format:** 24-bit BMP dosyaları
-- **Renk formatı:** RGB (BGR byte sırası)
+- **Desteklenen format:** Tüm BMP formatları (Pillow otomatik dönüştürür)
+- **Renk formatı:** RGB
 - **Yedekleme:** Orijinal dosya `.bmp.yedek` uzantısıyla yedeklenir
 - **Windows sürümü:** Windows 7 32-bit (diğer Windows sürümlerinde de çalışabilir)
+- **Python versiyonu:** 3.8+
+- **Kütüphane:** Pillow (PIL)
 
 ## Sorun Giderme
 
@@ -103,7 +123,11 @@ veya Visual Studio'da:
 ### "BMP dosyası okunamadı" hatası
 - Dosyanın gerçekten BMP formatında olduğundan emin olun
 - Dosyanın bozuk olmadığını kontrol edin
-- 24-bit BMP formatında olduğundan emin olun
+- Pillow kütüphanesinin kurulu olduğundan emin olun: `python -c "import PIL"`
+
+### "Pillow bulunamadı" hatası
+- Pillow kütüphanesini kurun: `python -m pip install Pillow`
+- Veya `PillowKur.bat` dosyasını çalıştırın
 
 ### Menü görünmüyor
 - Windows Explorer'ı yeniden başlatın (Görev Yöneticisi > explorer.exe > Sonlandır > Yeni Görev > explorer)

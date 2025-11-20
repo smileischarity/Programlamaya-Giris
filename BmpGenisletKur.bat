@@ -1,16 +1,49 @@
 @echo off
-REM BmpGenislet.exe'yi kurulum dizinine kopyalama ve sağ tık menüsünü ekleme scripti
+REM BmpGenislet Python scriptini kurulum dizinine kopyalama ve sağ tık menüsünü ekleme scripti
 REM Bu scripti Yönetici olarak çalıştırmanız gerekmektedir
+REM Python 3.8+ ve Pillow kütüphanesi gerektirir
 
 echo ========================================
 echo BmpGenislet Kurulum Scripti
-echo Windows 7 32-bit icin
+echo Windows 7 32-bit icin (Python 3.8+)
 echo ========================================
 echo.
+
+REM Python'un kurulu olup olmadığını kontrol et
+where python >nul 2>&1
+if %errorlevel% neq 0 (
+    echo ✗ Hata: Python bulunamadi!
+    echo   Lutfen Python 3.8 veya uzeri bir surumun kurulu oldugundan emin olun.
+    pause
+    exit /b 1
+)
+
+REM Python versiyonunu kontrol et
+for /f "tokens=2" %%i in ('python --version 2^>^&1') do set PYTHON_VERSION=%%i
+echo ✓ Python bulundu: %PYTHON_VERSION%
+
+REM Pillow kütüphanesinin kurulu olup olmadığını kontrol et
+python -c "import PIL" >nul 2>&1
+if %errorlevel% neq 0 (
+    echo.
+    echo [UYARI] Pillow kutuphanesi bulunamadi!
+    echo         Pillow kuruluyor...
+    python -m pip install Pillow --quiet
+    if %errorlevel% neq 0 (
+        echo ✗ Hata: Pillow kutuphanesi kurulamadi
+        echo   Lutfen manuel olarak kurun: python -m pip install Pillow
+        pause
+        exit /b 1
+    )
+    echo ✓ Pillow kutuphanesi kuruldu
+) else (
+    echo ✓ Pillow kutuphanesi zaten kurulu
+)
 
 REM Kurulum dizinini oluştur
 set KURULUM_DIZINI=C:\Program Files\BmpGenislet
 
+echo.
 echo [1/3] Kurulum dizini olusturuluyor...
 if not exist "%KURULUM_DIZINI%" (
     mkdir "%KURULUM_DIZINI%" >nul 2>&1
@@ -26,29 +59,35 @@ if not exist "%KURULUM_DIZINI%" (
     echo ✓ Kurulum dizini zaten mevcut
 )
 
-REM BmpGenislet.exe'yi kopyala
-echo [2/3] BmpGenislet.exe kopyalaniyor...
-if exist "%~dp0BmpGenislet.exe" (
-    copy /Y "%~dp0BmpGenislet.exe" "%KURULUM_DIZINI%\" >nul 2>&1
+REM BmpGenislet.py'yi kopyala
+echo [2/3] BmpGenislet.py kopyalaniyor...
+if exist "%~dp0BmpGenislet.py" (
+    copy /Y "%~dp0BmpGenislet.py" "%KURULUM_DIZINI%\" >nul 2>&1
     if %errorlevel%==0 (
-        echo ✓ BmpGenislet.exe kopyalandi
+        echo ✓ BmpGenislet.py kopyalandi
     ) else (
-        echo ✗ Hata: BmpGenislet.exe kopyalanamadi
+        echo ✗ Hata: BmpGenislet.py kopyalanamadi
         pause
         exit /b 1
     )
 ) else (
-    echo ✗ Hata: BmpGenislet.exe bulunamadi
-    echo   Lutfen bu scripti BmpGenislet.exe ile ayni dizinde calistirin.
+    echo ✗ Hata: BmpGenislet.py bulunamadi
+    echo   Lutfen bu scripti BmpGenislet.py ile ayni dizinde calistirin.
     pause
     exit /b 1
+)
+
+REM BmpGenislet.bat wrapper'ını kopyala
+if exist "%~dp0BmpGenislet.bat" (
+    copy /Y "%~dp0BmpGenislet.bat" "%KURULUM_DIZINI%\" >nul 2>&1
+    echo ✓ BmpGenislet.bat kopyalandi
 )
 
 REM Sağ tık menüsünü ekle
 echo [3/3] Sag tik menusu ekleniyor...
 reg add "HKEY_CLASSES_ROOT\bmpfile\shell\BmpGenislet" /ve /d "+1 piksel sag kisma" /f >nul 2>&1
 reg add "HKEY_CLASSES_ROOT\bmpfile\shell\BmpGenislet" /v "Icon" /d "shell32.dll,1" /f >nul 2>&1
-reg add "HKEY_CLASSES_ROOT\bmpfile\shell\BmpGenislet\command" /ve /d "\"%KURULUM_DIZINI%\\BmpGenislet.exe\" \"%%1\"" /f >nul 2>&1
+reg add "HKEY_CLASSES_ROOT\bmpfile\shell\BmpGenislet\command" /ve /d "\"%KURULUM_DIZINI%\\BmpGenislet.bat\" \"%%1\"" /f >nul 2>&1
 
 if %errorlevel%==0 (
     echo ✓ Sag tik menusu eklendi
@@ -63,7 +102,8 @@ echo ========================================
 echo Kurulum tamamlandi!
 echo ========================================
 echo.
-echo BmpGenislet.exe kuruldu: %KURULUM_DIZINI%
+echo BmpGenislet kuruldu: %KURULUM_DIZINI%
+echo Python versiyonu: %PYTHON_VERSION%
 echo.
 echo Kullanim:
 echo   1. Herhangi bir .bmp dosyasina sag tiklayin

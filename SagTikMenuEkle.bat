@@ -8,13 +8,13 @@ echo Windows 7 32-bit icin
 echo ========================================
 echo.
 
-REM BmpGenislet.exe'nin yolunu ayarla
+REM BmpGenislet.bat wrapper'ının yolunu ayarla
 REM NOT: Bu yolu kendi kurulum konumunuza göre değiştirin
-set BMPGENISLET_YOLU=%~dp0BmpGenislet.exe
+set BMPGENISLET_YOLU=%~dp0BmpGenislet.bat
 
 REM Eğer mevcut dizinde yoksa, varsayılan kurulum yolunu kullan
 if not exist "%BMPGENISLET_YOLU%" (
-    set BMPGENISLET_YOLU=C:\Program Files\BmpGenislet\BmpGenislet.exe
+    set BMPGENISLET_YOLU=C:\Program Files\BmpGenislet\BmpGenislet.bat
 )
 
 REM BMP dosyalarına sağ tık menüsüne öğe ekleme

@@ -9,4 +9,4 @@ Windows Registry Editor Version 5.00
 "Icon"="shell32.dll,1"
 
 [HKEY_CLASSES_ROOT\bmpfile\shell\BmpGenislet\command]
-@="\"C:\\Program Files\\BmpGenislet\\BmpGenislet.exe\" \"%1\""
+@="\"C:\\Program Files\\BmpGenislet\\BmpGenislet.bat\" \"%1\""
