@@ -1,0 +1,31 @@
+Windows Registry Editor Version 5.00
+
+; Dosyalara sağ tık menüsüne öğe ekleme
+; Tüm dosyalar için sağ tık menüsüne "Özel İşlem" ekler
+
+[HKEY_CLASSES_ROOT\*\shell\OzelIslem]
+@="Özel İşlem"
+"Icon"="shell32.dll,0"
+
+[HKEY_CLASSES_ROOT\*\shell\OzelIslem\command]
+@="cmd.exe /c echo Seçilen dosya: %1 && pause"
+
+; Klasörlere sağ tık menüsüne öğe ekleme
+; Klasörlere sağ tıklandığında görünecek öğe
+
+[HKEY_CLASSES_ROOT\Directory\shell\OzelKlasorIslemi]
+@="Özel Klasör İşlemi"
+"Icon"="shell32.dll,3"
+
+[HKEY_CLASSES_ROOT\Directory\shell\OzelKlasorIslemi\command]
+@="cmd.exe /c echo Seçilen klasör: %1 && pause"
+
+; Boş alana sağ tık menüsüne öğe ekleme
+; Klasör içinde boş alana sağ tıklandığında görünecek öğe
+
+[HKEY_CLASSES_ROOT\Directory\Background\shell\OzelBosAlan]
+@="Özel Boş Alan İşlemi"
+"Icon"="shell32.dll,4"
+
+[HKEY_CLASSES_ROOT\Directory\Background\shell\OzelBosAlan\command]
+@="cmd.exe /c echo Mevcut klasör: %V && pause"
