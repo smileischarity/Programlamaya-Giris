@@ -1,31 +1,26 @@
 @echo off
-REM Windows 7 32-bit için Sağ Tık Menüsünden Öğe Kaldırma Scripti
+REM Windows 7 32-bit için BMP Dosyalarından Sağ Tık Menüsü Öğesini Kaldırma Scripti
 REM Bu scripti Yönetici olarak çalıştırmanız gerekmektedir
 
 echo ========================================
-echo Sağ Tık Menusu Ogeleri Kaldirma Scripti
+echo BMP Dosyalari Icin Sag Tik Menusu Kaldirma
 echo Windows 7 32-bit icin
 echo ========================================
 echo.
 
-REM Dosyalardan sağ tık menüsü öğesini kaldırma
-echo [1/3] Dosyalardan sağ tık menüsü öğesi kaldırılıyor...
-reg delete "HKEY_CLASSES_ROOT\*\shell\OzelIslem" /f >nul 2>&1
-if %errorlevel%==0 (echo ✓ Dosyalar için öğe kaldırıldı) else (echo ✗ Öğe bulunamadı veya zaten kaldırılmış)
+REM BMP dosyalarından sağ tık menüsü öğesini kaldırma
+echo BMP dosyalarindan sag tik menusu ogesi kaldiriliyor...
+reg delete "HKEY_CLASSES_ROOT\bmpfile\shell\BmpGenislet" /f >nul 2>&1
 
-REM Klasörlerden sağ tık menüsü öğesini kaldırma
-echo [2/3] Klasörlerden sağ tık menüsü öğesi kaldırılıyor...
-reg delete "HKEY_CLASSES_ROOT\Directory\shell\OzelKlasorIslemi" /f >nul 2>&1
-if %errorlevel%==0 (echo ✓ Klasörler için öğe kaldırıldı) else (echo ✗ Öğe bulunamadı veya zaten kaldırılmış)
-
-REM Boş alandan sağ tık menüsü öğesini kaldırma
-echo [3/3] Boş alandan sağ tık menüsü öğesi kaldırılıyor...
-reg delete "HKEY_CLASSES_ROOT\Directory\Background\shell\OzelBosAlan" /f >nul 2>&1
-if %errorlevel%==0 (echo ✓ Boş alan için öğe kaldırıldı) else (echo ✗ Öğe bulunamadı veya zaten kaldırılmış)
+if %errorlevel%==0 (
+    echo ✓ BMP dosyalari icin oge kaldirildi
+) else (
+    echo ✗ Oge bulunamadi veya zaten kaldirilmis
+)
 
 echo.
 echo ========================================
-echo İşlem tamamlandı!
+echo Islem tamamlandi!
 echo ========================================
 echo.
 echo Not: Değişikliklerin etkili olması için Windows Explorer'ı yeniden başlatmanız gerekebilir.

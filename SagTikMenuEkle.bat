@@ -1,40 +1,46 @@
 @echo off
-REM Windows 7 32-bit için Sağ Tık Menüsüne Öğe Ekleme Scripti
+REM Windows 7 32-bit için BMP Dosyalarına Sağ Tık Menüsüne Öğe Ekleme Scripti
 REM Bu scripti Yönetici olarak çalıştırmanız gerekmektedir
 
 echo ========================================
-echo Sağ Tık Menusu Ogeleri Ekleme Scripti
+echo BMP Dosyalari Icin Sag Tik Menusu Ekleme
 echo Windows 7 32-bit icin
 echo ========================================
 echo.
 
-REM Dosyalara sağ tık menüsüne öğe ekleme
-echo [1/3] Dosyalara sağ tık menüsü öğesi ekleniyor...
-reg add "HKEY_CLASSES_ROOT\*\shell\OzelIslem" /ve /d "Özel İşlem" /f >nul 2>&1
-reg add "HKEY_CLASSES_ROOT\*\shell\OzelIslem" /v "Icon" /d "shell32.dll,0" /f >nul 2>&1
-reg add "HKEY_CLASSES_ROOT\*\shell\OzelIslem\command" /ve /d "cmd.exe /c echo Seçilen dosya: %%1 && pause" /f >nul 2>&1
-if %errorlevel%==0 (echo ✓ Dosyalar için öğe eklendi) else (echo ✗ Hata: Dosyalar için öğe eklenemedi)
+REM BmpGenislet.exe'nin yolunu ayarla
+REM NOT: Bu yolu kendi kurulum konumunuza göre değiştirin
+set BMPGENISLET_YOLU=%~dp0BmpGenislet.exe
 
-REM Klasörlere sağ tık menüsüne öğe ekleme
-echo [2/3] Klasörlere sağ tık menüsü öğesi ekleniyor...
-reg add "HKEY_CLASSES_ROOT\Directory\shell\OzelKlasorIslemi" /ve /d "Özel Klasör İşlemi" /f >nul 2>&1
-reg add "HKEY_CLASSES_ROOT\Directory\shell\OzelKlasorIslemi" /v "Icon" /d "shell32.dll,3" /f >nul 2>&1
-reg add "HKEY_CLASSES_ROOT\Directory\shell\OzelKlasorIslemi\command" /ve /d "cmd.exe /c echo Seçilen klasör: %%1 && pause" /f >nul 2>&1
-if %errorlevel%==0 (echo ✓ Klasörler için öğe eklendi) else (echo ✗ Hata: Klasörler için öğe eklenemedi)
+REM Eğer mevcut dizinde yoksa, varsayılan kurulum yolunu kullan
+if not exist "%BMPGENISLET_YOLU%" (
+    set BMPGENISLET_YOLU=C:\Program Files\BmpGenislet\BmpGenislet.exe
+)
 
-REM Boş alana sağ tık menüsüne öğe ekleme
-echo [3/3] Boş alana sağ tık menüsü öğesi ekleniyor...
-reg add "HKEY_CLASSES_ROOT\Directory\Background\shell\OzelBosAlan" /ve /d "Özel Boş Alan İşlemi" /f >nul 2>&1
-reg add "HKEY_CLASSES_ROOT\Directory\Background\shell\OzelBosAlan" /v "Icon" /d "shell32.dll,4" /f >nul 2>&1
-reg add "HKEY_CLASSES_ROOT\Directory\Background\shell\OzelBosAlan\command" /ve /d "cmd.exe /c echo Mevcut klasör: %%V && pause" /f >nul 2>&1
-if %errorlevel%==0 (echo ✓ Boş alan için öğe eklendi) else (echo ✗ Hata: Boş alan için öğe eklenemedi)
+REM BMP dosyalarına sağ tık menüsüne öğe ekleme
+echo BMP dosyalarina sag tik menusu ogesi ekleniyor...
+reg add "HKEY_CLASSES_ROOT\bmpfile\shell\BmpGenislet" /ve /d "+1 piksel sag kisma" /f >nul 2>&1
+reg add "HKEY_CLASSES_ROOT\bmpfile\shell\BmpGenislet" /v "Icon" /d "shell32.dll,1" /f >nul 2>&1
+reg add "HKEY_CLASSES_ROOT\bmpfile\shell\BmpGenislet\command" /ve /d "\"%BMPGENISLET_YOLU%\" \"%%1\"" /f >nul 2>&1
+
+if %errorlevel%==0 (
+    echo ✓ BMP dosyalari icin oge eklendi
+    echo   Menu metni: "+1 piksel sag kisma"
+    echo   Program yolu: %BMPGENISLET_YOLU%
+) else (
+    echo ✗ Hata: BMP dosyalari icin oge eklenemedi
+    echo   Lutfen scripti Yonetici olarak calistirdiginizdan emin olun.
+)
 
 echo.
 echo ========================================
-echo İşlem tamamlandı!
+echo Islem tamamlandi!
 echo ========================================
 echo.
 echo Not: Değişikliklerin etkili olması için Windows Explorer'ı yeniden başlatmanız gerekebilir.
 echo      Görev Yöneticisi'nden explorer.exe'yi sonlandırıp yeniden başlatabilirsiniz.
+echo.
+echo UYARI: BmpGenislet.exe dosyasının doğru konumda olduğundan emin olun!
+echo        Şu anki yol: %BMPGENISLET_YOLU%
 echo.
 pause
